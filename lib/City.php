@@ -23,7 +23,9 @@ class CityTable extends DataManager
             new Entity\StringField('name'),
             new Entity\StringField('region'),
             new Entity\StringField('district'),
-            new Entity\IntegerField('sort')
+            new Entity\IntegerField('sort'),
+            new Entity\StringField('lat'),
+            new Entity\StringField('lon')
         );
     }
 }

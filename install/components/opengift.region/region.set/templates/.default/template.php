@@ -13,10 +13,10 @@
 $this->setFrameMode(true);
 
 ?>
-<p><?=$arResult['CURRENT_REGION']['name']?>
-    <a href="#" class="js-city-select"
-   onclick="$('.js-city-select').toggle();return false;">Выбрать город</a>
-<div class="js-city-select select-city-modal modal out" tabindex="-1" role="dialog" style="padding-left: 0px;"></p>
+<div><?=$arResult['CURRENT_REGION']['name']?>
+    <a href="#" class="js-city-select-link"
+       onclick="$('.js-city-select').toggle();return false;">Выбрать город</a></div>
+<div class="js-city-select select-city-modal modal out" tabindex="-1" role="dialog" style="padding-left: 0px;">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <button type="button" class="btn btn-default modal-close-btn" data-dismiss="modal" aria-hidden="true">

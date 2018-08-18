@@ -20,7 +20,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST' && check_bitrix_sessid() && $_POST['actio
             'name' => $row[1],
             'region' => $row[2],
             'district' => $row[3],
-            'sort' => 100
+            'sort' => 100,
+            'lat' => $row[4],
+            'lon' => $row[5]
         ];
     }
     fclose($f);

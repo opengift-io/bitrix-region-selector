@@ -21,9 +21,44 @@ $arResult['LIST'] = $this->getRegionsStructured();
 $arResult['LIST_RAW'] = $this->getRegionsList();
 $this->setCurrentRegion();
 $arResult['CURRENT_REGION'] = $this->getCurrentRegion();
-p($arResult['CURRENT_REGION']);
+
 if (!$arResult['CURRENT_REGION']) {
     $arResult['CURRENT_REGION'] = $this->getDefaultRegion();
 }
+if (\Bitrix\Main\Loader::includeModule('iblock')) {
+    $arFilials = [];
+    if ($arParams['FILIAL_IBLOCK_ID']) {
+        $filials = CIBlockElement::GetList([], ['IBLOCK_ID' => $arParams['FILIAL_IBLOCK_ID']]);
+        $arFilials = [];
+        while ($filial = $filials->GetNextElement()) {
+            $arFilial = $filial->GetFields();
+            $arFilial['PROPERTIES'] = $filial->GetProperties();
+
+            $filialCity = $arFilial['PROPERTIES'][$arParams['FILIAL_CITY_PROPERTY']]['VALUE'];
+            if ($filialCity == $arResult['CURRENT_REGION']['id']) {
+                $arResult['CURRENT_FILIAL'] = $filial;
+            }
+            $arFilials[] = $arFilial;
+        }
+        if (!$arResult['CURRENT_FILIAL']) {
+            foreach ($arFilials as $k => $filial) {
+                $filialCity = $filial['PROPERTIES'][$arParams['FILIAL_CITY_PROPERTY']]['VALUE'];
+                if ($filialCity) {
+                    $arFilials[$k]['CITY'] = \OpenGift\BitrixRegionManager\CityTable::getById($filialCity)->fetch();
+                }
+            }
+        }
+    }
+
+    $arRange = [];
+    foreach ($arFilials as $k => $filial) {
+        $arRange[$k] = pow(floatval($filial['CITY']['lat']) - floatval($arResult['CURRENT_REGION']['lat']), 2) +
+            pow(floatval($filial['CITY']['lon']) - floatval($arResult['CURRENT_REGION']['lon']), 2);
+    }
+    asort($arRange);
+    $nearestFilialKey = array_keys($arRange)[0];
+    $arResult['CURRENT_FILIAL'] = $arFilials[$nearestFilialKey];
+}
+
 if (!$arParams['WITHOUT_TEMPLATE'])
     $this->IncludeComponentTemplate();
