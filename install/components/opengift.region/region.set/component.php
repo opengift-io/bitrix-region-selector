@@ -36,7 +36,7 @@ if (\Bitrix\Main\Loader::includeModule('iblock')) {
 
             $filialCity = $arFilial['PROPERTIES'][$arParams['FILIAL_CITY_PROPERTY']]['VALUE'];
             if ($filialCity == $arResult['CURRENT_REGION']['id']) {
-                $arResult['CURRENT_FILIAL'] = $filial;
+                $arResult['CURRENT_FILIAL'] = $arFilial;
             }
             $arFilials[] = $arFilial;
         }
@@ -50,14 +50,16 @@ if (\Bitrix\Main\Loader::includeModule('iblock')) {
         }
     }
 
-    $arRange = [];
-    foreach ($arFilials as $k => $filial) {
-        $arRange[$k] = pow(floatval($filial['CITY']['lat']) - floatval($arResult['CURRENT_REGION']['lat']), 2) +
-            pow(floatval($filial['CITY']['lon']) - floatval($arResult['CURRENT_REGION']['lon']), 2);
+    if (!$arResult['CURRENT_FILIAL']) {
+        $arRange = [];
+        foreach ($arFilials as $k => $filial) {
+            $arRange[$k] = pow(floatval($filial['CITY']['lat']) - floatval($arResult['CURRENT_REGION']['lat']), 2) +
+                pow(floatval($filial['CITY']['lon']) - floatval($arResult['CURRENT_REGION']['lon']), 2);
+        }
+        asort($arRange);
+        $nearestFilialKey = array_keys($arRange)[0];
+        $arResult['CURRENT_FILIAL'] = $arFilials[$nearestFilialKey];
     }
-    asort($arRange);
-    $nearestFilialKey = array_keys($arRange)[0];
-    $arResult['CURRENT_FILIAL'] = $arFilials[$nearestFilialKey];
 }
 
 if (!$arParams['WITHOUT_TEMPLATE'])

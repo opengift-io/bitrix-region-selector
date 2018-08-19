@@ -71,7 +71,7 @@ class CBitrixSetRegion extends CBitrixComponent
     public static function getRegionsList() {
         $arList = [];
         $rs = \OpenGift\BitrixRegionManager\CityTable::getList([
-            'order' => ['sort' => 'asc']
+            'order' => ['name' => 'asc']
         ]);
         while ($ar = $rs->fetch()) {
             $arList[] = $ar;
@@ -103,6 +103,16 @@ class CBitrixSetRegion extends CBitrixComponent
                 $arDistricts[$city['district']][$city['region']] = [];
             }
             $arDistricts[$city['district']][$city['region']][] = $city;
+        }
+
+        foreach ($arDistricts as $district => $regions) {
+            foreach ($regions as $region => $arCity) {
+                usort($arCity, function($a, $b) {
+                    if ($a['name'] == $b['name']) return 0;
+                    return $a['name'] > $b['name'] ? 1 : -1;
+                });
+                $arDistricts[$district][$region] = $arCity;
+            }
         }
         return $arDistricts;
     }

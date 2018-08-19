@@ -1,3 +1,29 @@
+.opengift-region a.city-select {
+    color: white;
+    font-size: 16px;
+    border-bottom: 1px dashed white;
+    text-decoration: none;
+}
+
+.opengift-region a.city-select:hover {
+    text-decoration: none;
+}
+
+.current-filial {
+    padding: 5px 0 0;
+}
+
+.current-filial .current-filial--phone {
+    color: white;
+    font-size: 14px;
+    display: block;
+}
+.current-filial .current-filial--email {
+    color: white;
+    font-size: 14px;
+    display: block;
+}
+
 .select-city-modal .modal-row .icon-arrow.icon-left:before, .select-city-modal .modal-row .icon-arrow.icon-right:before, .select-city-modal .select-lists .search-field .search:before, .select-city-modal .select-lists .search-field .geolocation:before {
     font-family: 'DNS-icon' !important;
     speak: none;
@@ -66,7 +92,16 @@
     font-weight: normal;
     line-height: 1;
     color: gray !important;
-    z-index: 999
+    z-index: 999;
+    position: absolute;
+    background: none;
+    border: 0;
+    cursor: pointer;
+}
+
+.select-city-modal .modal-close-btn:active {
+    border: 0;
+    outline: none;
 }
 
 @media (min-width: 992px) {
