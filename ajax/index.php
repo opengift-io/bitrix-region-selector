@@ -18,6 +18,12 @@ if ($_REQUEST['action']) {
     $APPLICATION->IncludeComponent('opengift.region:region.set', '', ['WITHOUT_TEMPLATE' => 'Y']);
     switch ($_REQUEST['action']) {
         case "regionSet":
+            if ($_REQUEST['city'] == 'auto') {
+                CBitrixSetRegion::clearRegion();
+                echo('reload');
+                die();
+            }
+            
             $cityId = intval($_REQUEST['city']);
             $city = \OpenGift\BitrixRegionManager\CityTable::getById($cityId)->fetch();
 
@@ -27,6 +33,10 @@ if ($_REQUEST['action']) {
             } else {
                 $result['error'] = 'City doesn\'t exist';
             }
+            break;
+
+        case "approveRegion":
+            $APPLICATION->set_cookie(REGION_MANAGER_COOKIE_CONFIRM_NAME, 'Y', strtotime( '+365 days' ), "/");
             break;
     }
 

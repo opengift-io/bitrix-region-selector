@@ -16,6 +16,15 @@ $this->setFrameMode(true);
 <div class="opengift-region">
 <a href="#" class="city-select js-city-select-link"
    onclick="$('.js-city-select').toggle();return false;"><?= $arResult['CURRENT_REGION']['name'] ?></a>
+<?if (!$arResult['REGION_CONFIRMED']):?>
+    <div class="current-filial--approval js-filial-approval">
+        <div>Ваш город - <?=$arResult['CURRENT_REGION']['name']?>?</div>
+        <div>
+        <span><a class="js-city-confirm" href="#">Да</a></span>&nbsp;&nbsp;
+        <a href="#" onclick="$('.js-city-select').toggle();$('.js-filial-approval').hide();return false;">Нет</a>
+        </div>
+    </div>
+<?endif;?>
 <?if ($arResult['CURRENT_FILIAL']):?>
     <div class="current-filial">
         <?
@@ -71,10 +80,6 @@ $this->setFrameMode(true);
                             <div class="search-field">
                                 <input data-role="search-city" class="form-control" placeholder="Название города"
                                        type="text">
-                                <i class="geolocation"></i>
-                                <div class="geolocation-title">
-                                    <span>Автоопределение выключено</span>
-                                </div>
                                 <div class="city-input-hint show-hint">
                                     <?
                                     $randCity = $arResult['LIST_RAW'][rand(0, count($arResult['LIST_RAW']) - 1)];
@@ -95,11 +100,19 @@ $this->setFrameMode(true);
 
                     <ul class="big-cities js-unsearcheble">
                         <li class="block-title">Крупные города</li>
+                        <?if (!$arResult['CITY_SAVED']):?>
+                        <li class="modal-row js-city">
+                            <a data-city-id="auto" href="#" rel="nofollow noopener">
+                                <span style="color:#999;">Автоопределение</span>
+                                <i class="icon-arrow icon-right"></i>
+                            </a>
+                        </li>
+                        <?endif;?>
                         <?
                         for ($i = 0; $i <= 6; $i++):
                             $city = $arResult['LIST_RAW'][$i];
                             ?>
-                            <li class="modal-row">
+                            <li class="modal-row js-city">
                                 <a data-city-id="<?= $city['id'] ?>" href="#" rel="nofollow noopener">
                                     <span><?= $city['name'] ?></span>
                                     <i class="icon-arrow icon-right"></i>
@@ -125,10 +138,10 @@ $this->setFrameMode(true);
 
                     <ul class="regions js-unsearcheble">
                         <li class="block-title" style="display: list-item;">Регион</li>
-                        <? $i = 0;
+                        <? $i = 0;$k = 0;
                         foreach ($arResult['LIST'] as $district => $arRegions):$i++;
-                            foreach ($arRegions as $region => $arCities):?>
-                                <li class="modal-row js-region <?= $i == 1 ? 'active' : '' ?>" style="display: <?= $i == 1 ? 'list-item' : 'none' ?>;">
+                            foreach ($arRegions as $region => $arCities):$k++;?>
+                                <li class="modal-row js-region <?= $k == 1 ? 'active' : '' ?>" style="display: <?= $i == 1 ? 'list-item' : 'none' ?>;">
                                     <a data-district-id="<?= md5($district) ?>" data-region-id="<?= md5($region) ?>"
                                        href="#" rel="nofollow noopener">
                                         <span><?= $region ?></span>

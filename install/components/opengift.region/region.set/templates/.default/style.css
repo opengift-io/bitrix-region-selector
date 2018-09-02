@@ -1,3 +1,16 @@
+
+.opengift-region {
+    position: relative;
+}
+.current-filial--approval {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    padding: 15px;
+    background: white;
+    border: 1px solid #AAA;
+    border-radius: 5px;
+}
 .opengift-region a.city-select {
     color: white;
     font-size: 16px;

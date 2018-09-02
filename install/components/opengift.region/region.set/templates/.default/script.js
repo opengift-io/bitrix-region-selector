@@ -47,5 +47,16 @@ $(function () {
                 location.reload();
             }
         )
+    });
+
+    $('.js-city-confirm').click(function() {
+        $('.js-filial-approval').hide();
+        $.post(
+            '/local/modules/opengift.region/ajax/',
+            {
+                'sessid': BX.bitrix_sessid(),
+                'action': 'approveRegion'
+            }
+        )
     })
 });

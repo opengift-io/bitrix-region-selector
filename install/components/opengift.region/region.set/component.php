@@ -62,5 +62,25 @@ if (\Bitrix\Main\Loader::includeModule('iblock')) {
     }
 }
 
+uksort($arResult['LIST'], function($a, $b) {
+    if ($a == $b) {
+        return 0;
+    }
+
+    return ($a < $b) ? -1 : 1;
+});
+
+foreach ($arResult['LIST'] as $district => &$arRegions) {
+    uksort($arRegions, function($a, $b) {
+        if ($a == $b) {
+            return 0;
+        }
+
+        return ($a < $b) ? -1 : 1;
+    });
+}
+
+$arResult['REGION_CONFIRMED'] = $this->isRegionConfirmed();
+
 if (!$arParams['WITHOUT_TEMPLATE'])
     $this->IncludeComponentTemplate();

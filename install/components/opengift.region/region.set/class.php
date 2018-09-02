@@ -37,6 +37,12 @@ class CBitrixSetRegion extends CBitrixComponent
         return $ip;
     }
 
+    public static function clearRegion() {
+        global $APPLICATION;
+        $APPLICATION->set_cookie(REGION_MANAGER_COOKIE_NAME, '', strtotime( '+365 days' ), "/");
+        $APPLICATION->set_cookie(REGION_MANAGER_COOKIE_CONFIRM_NAME, '', strtotime( '+365 days' ), "/");
+    }
+
     public static function saveRegion($region)
     {
         global $APPLICATION;
@@ -90,6 +96,11 @@ class CBitrixSetRegion extends CBitrixComponent
             'order' => ['sort' => 'asc'],
             'filter' => ['name' => $name]
         ])->fetch();
+    }
+    
+    public static function isRegionConfirmed() {
+        global $APPLICATION;
+        return $APPLICATION->get_cookie(REGION_MANAGER_COOKIE_CONFIRM_NAME) == 'Y';
     }
 
     public static function getRegionsStructured() {
