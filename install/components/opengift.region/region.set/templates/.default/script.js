@@ -7,7 +7,7 @@ $(function () {
         var $t = $(this).find('a'),
             $districts = $('.js-district'),
             $regions = $('.js-region'),
-            $city = $('.js-city');
+            $city = $('.js-city').not('.js-city-popular');
 
         if ($t.data('regionId')) {
             currentRegion = $t.data('regionId');
@@ -23,7 +23,7 @@ $(function () {
 
 
     $('[data-role="search-city"]').keyup(function () {
-        var $t = $(this), $un = $('.js-unsearcheble'), $cityList = $('.js-city');
+        var $t = $(this), $un = $('.js-unsearcheble'), $cityList = $('.js-city').not('.js-city-popular');
         if ($t.val()) {
             $un.hide();
             $cityList.hide().filter(':contains('+capitalizeFirstLetter($t.val())+')').show();

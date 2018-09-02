@@ -101,10 +101,10 @@ $this->setFrameMode(true);
                     <ul class="big-cities js-unsearcheble">
                         <li class="block-title">Крупные города</li>
                         <?if (!$arResult['CITY_SAVED']):?>
-                        <li class="modal-row js-city">
+                        <li class="modal-row js-city js-city-popular">
                             <a data-city-id="auto" href="#" rel="nofollow noopener">
                                 <span style="color:#999;">Автоопределение</span>
-                                <i class="icon-arrow icon-right"></i>
+                                <i class="fa fa-angle-right"></i>
                             </a>
                         </li>
                         <?endif;?>
@@ -112,10 +112,10 @@ $this->setFrameMode(true);
                         for ($i = 0; $i <= 6; $i++):
                             $city = $arResult['LIST_RAW'][$i];
                             ?>
-                            <li class="modal-row js-city">
+                            <li class="modal-row js-city js-city-popular">
                                 <a data-city-id="<?= $city['id'] ?>" href="#" rel="nofollow noopener">
                                     <span><?= $city['name'] ?></span>
-                                    <i class="icon-arrow icon-right"></i>
+                                    <i class="fa fa-angle-right"></i>
                                 </a>
                             </li>
                         <? endfor; ?>
@@ -130,7 +130,7 @@ $this->setFrameMode(true);
                             <li class="modal-row js-district <?= $i == 1 ? 'active' : '' ?>">
                                 <a data-district-id="<?= md5($district) ?>" href="#" rel="nofollow noopener">
                                     <span><?= $district ?></span>
-                                    <i class="icon-arrow icon-right"></i>
+                                    <i class="fa fa-angle-right"></i>
                                 </a>
                             </li>
                         <? endforeach; ?>
@@ -145,7 +145,7 @@ $this->setFrameMode(true);
                                     <a data-district-id="<?= md5($district) ?>" data-region-id="<?= md5($region) ?>"
                                        href="#" rel="nofollow noopener">
                                         <span><?= $region ?></span>
-                                        <i class="icon-arrow icon-right"></i>
+                                        <i class="fa fa-angle-right"></i>
                                     </a>
                                 </li>
                                 <?
@@ -165,7 +165,7 @@ $this->setFrameMode(true);
                                         <a data-district-id="<?= md5($district) ?>" data-region-id="<?= md5($region) ?>"
                                            data-city-id="<?= $arCity['id'] ?>" href="#" rel="nofollow noopener">
                                             <span><?= $arCity['name'] ?></span>
-                                            <i class="icon-arrow icon-right"></i>
+                                            <i class="fa fa-angle-right"></i>
                                         </a>
                                     </li>
                                     <?
